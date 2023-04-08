@@ -2,7 +2,7 @@ const router = require('express').Router();
 const User = require('../models/Users')
 const bcrypt = require('bcrypt')
 
-//POST /auth/register - REGISTER new User
+//POST api/auth/register - REGISTER new User
 router.get('/register', async (req, res) => {
     const user = await new User({
         username: "turtle2",
@@ -13,20 +13,22 @@ router.get('/register', async (req, res) => {
     await user.save()
     res.send(user)
  })
+
+ //POST api/auth/register - REGISTER new User
 router.post('/register', async (req, res) => {
     try {
-        //hash new password
+        //generate new password
         const salt = await bcrypt.genSalt(10)
-        const hashedPassword = await bcrypt.hash(user.password, salt)
+        const hashedPassword = await bcrypt.hash(req.body.password, salt)
 
-        //create new user
-        const user = await new User({
+          //create new user
+        const newUser = await new User({
             username: req.body.username,
             email: req.body.email,
-            password: req.body.password
+            password: hashedPassword
         })
         //save user and respond
-        const savedUser = await user.save()
+        const savedUser = await newUser.save()
         res.status(200).json(savedUser)
     } catch(error) {
         console.log(error, "register post route")
@@ -34,7 +36,7 @@ router.post('/register', async (req, res) => {
 
  })
 
- //POST /auth/login - LOGIN User
+ //POST api/auth/login - LOGIN User
  router.post('/login', async (req, res) => {
     try {
     const user = await User.findOne({email: req.body.email})
