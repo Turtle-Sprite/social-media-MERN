@@ -1,6 +1,9 @@
 import React from 'react'
 import './rightbar.css'
 import {FaBirthdayCake} from 'react-icons/fa'
+import Online from '../online/Online'
+
+import {Users} from '../../dummyData'
 
 function Rightbar() {
   return (
@@ -15,6 +18,12 @@ function Rightbar() {
           <div className='rightbarAd'>
             Place ad here.
           </div>
+          <h4 className="rightbarTitle">Online Friends</h4>
+        <ul className="rightbarFriendList">
+         {Users.map((u) => (
+          <Online key={u.id} user={u} />  
+        ))}
+        </ul>
       </div>
     </div>
   )

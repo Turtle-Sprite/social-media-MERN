@@ -11,6 +11,9 @@ import {
   MdEvent,
   MdSchool,
 } from "react-icons/md";
+import CloseFriends from '../closeFriends/CloseFriends'
+
+import { Users } from '../../dummyData'
 
 function Sidebar() {
   return (
@@ -56,15 +59,10 @@ function Sidebar() {
         </ul>
         <button className='sidebarButton'>Show More</button>
         <hr className="sidebarHr"/>
-        <ul className="sidebarFriendList">
-          <li className="sidebarFriend">
-            <img
-              src="assets/person/1.jpeg"
-              alt=""
-              className="sidebarFriendImg"
-            />
-            <span className="sidebarFriendName">John Doe</span>
-          </li>
+          <ul className="sidebarFriendList">
+            {Users.map((u) => (
+              <CloseFriends key={u.id} user={u} />
+            ))}
           </ul>
       </div>
     </div>
